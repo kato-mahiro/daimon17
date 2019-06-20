@@ -47,7 +47,6 @@ class NeuralNetwork:
                     t_c[i]
             output = np.tanh(self.neurons[no].coefficient * output + self.neurons[no].activation_bias)
             #update weights
-            print('update weights')
             for i in range(len(connection_id)):
                 cid = connection_id[i]
                 self.connections[cid].weight += 2 * \
@@ -68,18 +67,14 @@ class NeuralNetwork:
         #delete and add connection randomly
         if(random.random() < 0.1 and len(self.connections) > CONNECTION_NUM_LOWER_LIMIT): #delete
             del self.connections[ random.randint(0,len(self.connections)) ]
-            print('削除した')
         if(random.random() < 0.1 and len(self.connections) < CONNECTION_NUM_UPPER_LIMIT): #add
             self.connections.append(Connection())
-            print('追加した')
         for i in range(len(self.neurons)):
             if(random.random() < 0.01):
                 self.neurons[i] = Neuron()
-                print('ニューロン突然変異だ')
         for i in range(len(self.connections)):
             if(random.random() < 0.01):
                 self.connections[i] = Connection()
-                print('結合突然変異だ')
 
 if __name__=='__main__':
     test_neural_network = NeuralNetwork()
