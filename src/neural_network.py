@@ -22,11 +22,6 @@ class Connection:
         self.output_neuron_index = random.randint(0, NH+NO -1)
 
 class NeuralNetwork:
-    """
-    - 入力に対して出力を求める
-    - 重みの更新
-    - 突然変異
-    """
     def __init__(self):
         self.connections = [Connection() for i in range(random.randint(INITIAL_CONNECTION_NUM-5,INITIAL_CONNECTION_NUM+5))]
         self.neurons = [Neuron() for i in range(NH+NO+NI)]
@@ -70,7 +65,21 @@ class NeuralNetwork:
             output_vector.append(self.neurons[NH+i].activation)
         return output_vector
     def mutation(self):
-        pass
+        #delete and add connection randomly
+        if(random.random() < 0.1 and len(self.connections) > CONNECTION_NUM_LOWER_LIMIT): #delete
+            del self.connections[ random.randint(0,len(self.connections)) ]
+            print('削除した')
+        if(random.random() < 0.1 and len(self.connections) < CONNECTION_NUM_UPPER_LIMIT): #add
+            self.connections.append(Connection())
+            print('追加した')
+        for i in range(len(self.neurons)):
+            if(random.random() < 0.01):
+                self.neurons[i] = Neuron()
+                print('ニューロン突然変異だ')
+        for i in range(len(self.connections)):
+            if(random.random() < 0.01):
+                self.connections[i] = Connection()
+                print('結合突然変異だ')
 
 if __name__=='__main__':
     test_neural_network = NeuralNetwork()
@@ -89,3 +98,4 @@ if __name__=='__main__':
     showinfo()
     test_neural_network.get_output([1.0,1.0])
     showinfo()
+    test_neural_network.mutation()
