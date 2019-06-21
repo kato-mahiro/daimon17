@@ -6,9 +6,10 @@ from neural_network import NeuralNetwork
 
 class Agent:
     def __init__(self):
-        neural_network = NeuralNetwork()
-        correct_answer_count = 0
-        accuracy = 0.0
+        self.neural_network = NeuralNetwork()
+        self.correct_answer_count = 0
+        self.is_correct_history : List[bool] = []
+        self.accuracy = 0.0
 
 class Wcst:
     def __init__(self):
@@ -19,7 +20,8 @@ class Wcst:
         self.question_vector = []
         self.feedback_vector = []
         self.correct_answer_vector = []
-    def question(self) -> List[int]:
+
+    def question(self) -> List[int],List[int]:
         l = [0,1,2,3]
         color = [0,0,0,0]
         shape = [0,0,0,0]
@@ -45,7 +47,8 @@ class Wcst:
         self.question_vector += [1,0]
         self.question_vector += [0,0]
         self.question_vector += [0,0,0,0]
-        return(self.question_vector)
+        return(self.question_vector, self.correct_answer_vector)
+
     def feedback(self, is_correct:bool, answer_vector:List[int]) -> List[int]:
         self.feedback_vector = self.question_vector[:12]
         self.feedback_vector += [0,1]
@@ -55,6 +58,7 @@ class Wcst:
             self.feedback_vector += [0,1]
         self.feedback_vector += answer_vector
         return(self.feedback_vector)
+
     def change_rule(self):
         next_rule = random.choice(self.rules)
         while(next_rule == self.current_rule):
@@ -66,3 +70,4 @@ if __name__=='__main__':
     print(wcst.question())
     print(wcst.feedback(True,[-1,-1,-1,-1]))
     wcst.change_rule()
+
