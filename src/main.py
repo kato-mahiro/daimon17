@@ -1,4 +1,5 @@
 #coding:utf-8
+from typing import List
 import random
 from const import *
 from neural_network import NeuralNetwork
@@ -18,7 +19,7 @@ class Wcst:
         self.question_vector = []
         self.feedback_vector = []
         self.correct_answer_vector = []
-    def question(self):
+    def question(self) -> List[int]:
         l = [0,1,2,3]
         color = [0,0,0,0]
         shape = [0,0,0,0]
@@ -45,8 +46,15 @@ class Wcst:
         self.question_vector += [0,0]
         self.question_vector += [0,0,0,0]
         return(self.question_vector)
-    def feedback(self,result):
+    def feedback(self, is_correct:bool, answer_vector:List[int]) -> List[int]:
         self.feedback_vector = self.question_vector[:12]
+        self.feedback_vector += [0,1]
+        if is_correct == True:
+            self.feedback_vector += [1,0]
+        elif is_correct == False:
+            self.feedback_vector += [0,1]
+        self.feedback_vector += answer_vector
+        return(self.feedback_vector)
     def change_rule(self):
         next_rule = random.choice(self.rules)
         while(next_rule == self.current_rule):
@@ -55,5 +63,6 @@ class Wcst:
 
 if __name__=='__main__':
     wcst = Wcst()
-    wcst.question()
+    print(wcst.question())
+    print(wcst.feedback(True,[-1,-1,-1,-1]))
     wcst.change_rule()
