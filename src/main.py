@@ -67,9 +67,5 @@ class Wcst:
         self.current_rule = next_rule
 
 if __name__=='__main__':
+    agents = [Agent() for i in range(256)]
     wcst = Wcst()
-    print(wcst.question())
-    print(wcst.feedback(True,[-1,-1,-1,-1]))
-    wcst.change_rule()
-    print(wcst.question())
-    print(wcst.feedback(True,[-1,-1,-1,-1]))
