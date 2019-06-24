@@ -23,10 +23,15 @@ class Wcst:
         self.correct_answer_vector = []
 
     def question(self) -> Tuple[List[int],List[int]]:
+        """
+        return randomized question_vector and correct_answer_vector
+        following the current_rule.
+        """
         l = [0,1,2,3]
         color = [0,0,0,0]
         shape = [0,0,0,0]
         number = [0,0,0,0]
+        self.question_vector = []
         self.correct_answer_vector = [0,0,0,0]
         correct_answer_number = l.pop(random.randint(0,len(l)-1))
         self.correct_answer_vector[correct_answer_number] = 1
@@ -67,5 +72,26 @@ class Wcst:
         self.current_rule = next_rule
 
 if __name__=='__main__':
-    agents = [Agent() for i in range(256)]
+    agents = [Agent() for i in range(1)]
     wcst = Wcst()
+
+    def play(agent,wcst):
+        for round_no in range(64):
+            q_v, a_v = wcst.question()
+            print(q_v,a_v)
+            output = agent.neural_network.get_output(q_v)
+            corrected_output = [0 for i in range(4)]
+            corrected_output[output.index(max(output))] = 1
+            if(corrected_output == a_v):
+                agent.is_correct_history.append(True)
+                agent.correct_answer_count += 1
+            else:
+                agent.is_correct_history.append(False)
+
+    def evolution(agents):
+        pass
+
+    for generation_no in range(1):
+        for agent_no in range(len(agents)):
+            agent = agents[agent_no]
+            play(agent,wcst)
