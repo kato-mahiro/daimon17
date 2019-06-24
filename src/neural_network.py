@@ -57,8 +57,8 @@ class NeuralNetwork:
                     t_c[i]
             return output
 
-    def get_output(self,input_vector:List[int]):
-       input_vector = list(map(float,input_vector))
+    def get_output(self,input_vector:List[int]) -> List[float]:
+        input_vector = list(map(float,input_vector))
         for i in range(NI):
             self.neurons[NH+NO+i].activation = input_vector[i]
         for i in range(NH+NO):
@@ -67,6 +67,7 @@ class NeuralNetwork:
         for i in range(NO):
             output_vector.append(self.neurons[NH+i].activation)
         return output_vector
+
     def mutation(self):
         #delete and add connection randomly
         if(random.random() < 0.1 and len(self.connections) > CONNECTION_NUM_LOWER_LIMIT): #delete
@@ -95,6 +96,6 @@ if __name__=='__main__':
         for i in range(len(test_neural_network.neurons)):
             print('{:.4f}'.format(test_neural_network.neurons[i].activation))
     showinfo()
-    test_neural_network.get_output([1.0,1.0])
+    test_neural_network.get_output([1,1])
     showinfo()
     test_neural_network.mutation()
