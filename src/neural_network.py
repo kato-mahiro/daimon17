@@ -57,7 +57,7 @@ class NeuralNetwork:
                     t_c[i]
             return output
 
-    def get_output(self,input_vector:List()):
+    def get_output(self,input_vector:List[float]):
         for i in range(NI):
             self.neurons[NH+NO+i].activation = input_vector[i]
         for i in range(NH+NO):
