@@ -1,3 +1,4 @@
+from typing import List
 import random
 import numpy as np
 from const import *
@@ -25,7 +26,8 @@ class NeuralNetwork:
     def __init__(self):
         self.connections = [Connection() for i in range(random.randint(INITIAL_CONNECTION_NUM-5,INITIAL_CONNECTION_NUM+5))]
         self.neurons = [Neuron() for i in range(NH+NO+NI)]
-    def get_activation(self,no):
+
+    def get_activation(self,no:int) -> float:
         connection_id = []
         t_c = []
         for i in range(len(self.connections)):
@@ -54,7 +56,8 @@ class NeuralNetwork:
                     self.neurons[self.connections[cid].input_neuron_index].activation * \
                     t_c[i]
             return output
-    def get_output(self,input_vector):
+
+    def get_output(self,input_vector:List()):
         for i in range(NI):
             self.neurons[NH+NO+i].activation = input_vector[i]
         for i in range(NH+NO):
