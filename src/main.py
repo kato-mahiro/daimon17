@@ -1,5 +1,6 @@
 #coding:utf-8
 from typing import List
+from typing import Tuple
 import random
 from const import *
 from neural_network import NeuralNetwork
@@ -21,7 +22,7 @@ class Wcst:
         self.feedback_vector = []
         self.correct_answer_vector = []
 
-    def question(self) -> List[int],List[int]:
+    def question(self) -> Tuple[List[int],List[int]]:
         l = [0,1,2,3]
         color = [0,0,0,0]
         shape = [0,0,0,0]
@@ -70,4 +71,5 @@ if __name__=='__main__':
     print(wcst.question())
     print(wcst.feedback(True,[-1,-1,-1,-1]))
     wcst.change_rule()
-
+    print(wcst.question())
+    print(wcst.feedback(True,[-1,-1,-1,-1]))
