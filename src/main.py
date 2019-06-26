@@ -26,8 +26,8 @@ class Wcst:
 
     def question(self) -> Tuple[List[int],List[int]]:
         """
-        return randomized question_vector and correct_answer_vector
-        following the current_rule.
+        return randomized question_vector and 
+        correct_answer_vector following the current_rule.
         """
         l = [0,1,2,3]
         color = [0,0,0,0]
