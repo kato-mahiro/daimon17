@@ -73,16 +73,12 @@ class Wcst:
             next_rule = random.choice(self.rules)
         self.current_rule = next_rule
 
-if __name__=='__main__':
-    agents = [Agent() for i in range(POPULATION_NUM)]
-    wcst = Wcst()
-
-    def play(agent,wcst):
+    def play(self,agent:Aegnt):
         agent.correct_answer_count = 0
         agent.fitness = 0
         agent.is_correct_history = []
         for round_no in range(ROUND_NUM):
-            q_v, a_v = wcst.question()
+            q_v, a_v = self.question()
             output = agent.neural_network.get_output(q_v)
             reshaped_output = [0 for i in range(4)]
             reshaped_output[output.index(max(output))] = 1
@@ -91,20 +87,27 @@ if __name__=='__main__':
                 agent.correct_answer_count += 1
             else:
                 agent.is_correct_history.append(False)
+            # feedback_phase
+            f_v = self.feedback(agent.is_correct_history[-1], reshaped_output)
+            output = agent.neural_network.get_output(f_v)
         agent.fitness = math.exp(agent.correct_answer_count)
 
-    def evolution(agents):
-        fitness_list = []
-        for i in range(POPULATION_NUM):
-            fitness_list.append(agents[i].fitness)
-        evolved_agents = []
-        for i in range(POPULATION_NUM):
-            evolved_agents.append(random.choices(agents, weights=fitness_list)[0])
-            evolved_agents[i].neural_network.mutation()
-        return evolved_agents
+def evolution(agents):
+    fitness_list = []
+    for i in range(POPULATION_NUM):
+        fitness_list.append(agents[i].fitness)
+    evolved_agents = []
+    for i in range(POPULATION_NUM):
+        evolved_agents.append(random.choices(agents, weights=fitness_list)[0])
+        evolved_agents[i].neural_network.mutation()
+    return evolved_agents
+
+if __name__=='__main__':
+    agents = [Agent() for i in range(POPULATION_NUM)]
+    wcst = Wcst()
 
     for generation_no in range(GENERATION_UPPER_LIMIT):
         for agent_no in range(POPULATION_NUM):
             agent = agents[agent_no]
             play(agent,wcst)
-        evolution(agents)
+        agents = evolution(agents)
