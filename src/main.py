@@ -7,6 +7,7 @@ from typing import Tuple
 from const import *
 from neural_network import NeuralNetwork
 
+
 class Agent:
     def __init__(self):
         self.neural_network = NeuralNetwork()
@@ -73,10 +74,11 @@ class Wcst:
             next_rule = random.choice(self.rules)
         self.current_rule = next_rule
 
-    def play(self,agent:Aegnt):
+    def play(self,agent):
         agent.correct_answer_count = 0
         agent.fitness = 0
         agent.is_correct_history = []
+        rule_changing_step = random.choice(list(range(24,40)))
         for round_no in range(ROUND_NUM):
             q_v, a_v = self.question()
             output = agent.neural_network.get_output(q_v)
@@ -90,6 +92,9 @@ class Wcst:
             # feedback_phase
             f_v = self.feedback(agent.is_correct_history[-1], reshaped_output)
             output = agent.neural_network.get_output(f_v)
+            #change rule
+            if round_no == rule_changing_step
+                self.change_rule()
         agent.fitness = math.exp(agent.correct_answer_count)
 
 def evolution(agents):
@@ -108,6 +113,5 @@ if __name__=='__main__':
 
     for generation_no in range(GENERATION_UPPER_LIMIT):
         for agent_no in range(POPULATION_NUM):
-            agent = agents[agent_no]
-            play(agent,wcst)
+            wcst.play(agents[agent_no])
         agents = evolution(agents)
