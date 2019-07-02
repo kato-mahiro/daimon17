@@ -7,7 +7,6 @@ from typing import Tuple
 from const import *
 from neural_network import NeuralNetwork
 
-
 class Agent:
     def __init__(self):
         self.neural_network = NeuralNetwork()
@@ -93,23 +92,24 @@ class Wcst:
             f_v = self.feedback(agent.is_correct_history[-1], reshaped_output)
             output = agent.neural_network.get_output(f_v)
             #change rule
-            if round_no == rule_changing_step
+            if round_no == rule_changing_step:
                 self.change_rule()
-        agent.fitness = math.exp(agent.correct_answer_count)
-
-def evolution(agents):
-    fitness_list = []
-    for i in range(POPULATION_NUM):
-        fitness_list.append(agents[i].fitness)
-    evolved_agents = []
-    for i in range(POPULATION_NUM):
-        evolved_agents.append(random.choices(agents, weights=fitness_list)[0])
-        evolved_agents[i].neural_network.mutation()
-    return evolved_agents
+        agent.fitness = agent.correct_answer_count/ROUND_NUM
 
 if __name__=='__main__':
     agents = [Agent() for i in range(POPULATION_NUM)]
     wcst = Wcst()
+
+    def evolution(agents):
+        fitness_list = []
+        for i in range(POPULATION_NUM):
+            fitness_list.append(agents[i].fitness)
+        print("max-fitness:",max(fitness_list))
+        evolved_agents = []
+        for i in range(POPULATION_NUM):
+            evolved_agents.append(random.choices(agents, weights=fitness_list)[0])
+            evolved_agents[i].neural_network.mutation()
+        return evolved_agents
 
     for generation_no in range(GENERATION_UPPER_LIMIT):
         for agent_no in range(POPULATION_NUM):
