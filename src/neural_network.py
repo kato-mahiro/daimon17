@@ -71,7 +71,7 @@ class NeuralNetwork:
     def mutation(self):
         #delete and add connection randomly
         if(random.random() < 0.1 and len(self.connections) > CONNECTION_NUM_LOWER_LIMIT): #delete
-            del self.connections[ random.randint(0,len(self.connections)) ]
+            del self.connections[ random.randint(0,len(self.connections)-1 ) ]
         if(random.random() < 0.1 and len(self.connections) < CONNECTION_NUM_UPPER_LIMIT): #add
             self.connections.append(Connection())
         for i in range(len(self.neurons)):
